@@ -3,6 +3,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -11,16 +12,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static java.sql.Types.NUMERIC;
+
 public class XlsxReader {
 
     public static void main(String[] args) {
 
         try {
-            // The new file instance created
-            File myFile = new File("D:\\Prime Numbers Project\\vzorek_dat.xlsx");
 
             // Get data from the file
-            FileInputStream file = new FileInputStream(new File(String.valueOf(myFile)));
+            FileInputStream file = new FileInputStream(new File("D:\\Read Excell File\\Read-Excell-File\\vzorek_dat.xlsx"));
 
             // Created WorkBook instance to refer xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -37,40 +38,15 @@ public class XlsxReader {
                 // i will use for each loop to iterate over cell
                 for (Cell cell : row) {
 
-                    switch (cell.getCellType()) {
+                    CellType type = cell.getCellType();
 
-                        case STRING:
+                    if (type == CellType.NUMERIC) {
 
-                            System.out.println(cell.getRichStringCellValue().getString());
-
-                            break;
-
-                        case NUMERIC:
-
-                            System.out.print(cell.getNumericCellValue());
-
-                            break;
-
-                        case BOOLEAN:
-
-                            System.out.println(cell.getBooleanCellValue());
-
-                            break;
-
-                        case FORMULA:
-
-                            System.out.println(cell.getCellFormula());
-
-                            break;
-
-                        case BLANK:
-
-                            System.out.println();
-
-                            break;
+                        System.out.printf("[%d, %d] = NUMERIC; Value = %f%n",
+                                cell.getRowIndex(), cell.getColumnIndex(),
+                                cell.getNumericCellValue());
 
                     }
-
 
                 }
             }
@@ -83,11 +59,8 @@ public class XlsxReader {
 
             ex.printStackTrace();
 
-        } /*catch (InvalidFormatException exc) {
+        }
 
-            exc.printStackTrace();
-        }*/
-        
 
     }
 
