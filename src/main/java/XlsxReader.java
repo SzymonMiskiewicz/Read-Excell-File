@@ -1,3 +1,4 @@
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -7,69 +8,85 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class XlsxReader {
 
     public static void main(String[] args) {
 
-        // The new file instance created
-        File myFile = new File("D:\\Prime Numbers Project\\vzorek_dat.xlsx");
+        try {
+            // The new file instance created
+            File myFile = new File("D:\\Prime Numbers Project\\vzorek_dat.xlsx");
 
-        // Get data from the file
-        FileInputStream file = new FileInputStream(new File(myFile));
+            // Get data from the file
+            FileInputStream file = new FileInputStream(new File(String.valueOf(myFile)));
 
-        // Created WorkBook instance to refer xlsx file
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
+            // Created WorkBook instance to refer xlsx file
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
 
-        // Created sheet object to get the object
-        XSSFSheet sheet = workbook.getSheetAt(0);
+            // Created sheet object to get the object
+            XSSFSheet sheet = workbook.getSheetAt(0);
 
-        // Evaluating cell type
-        FormulaEvaluator formEva = workbook.getCreationHelper().createFormulaEvaluator();
+            // Evaluating cell type
+            FormulaEvaluator formEva = workbook.getCreationHelper().createFormulaEvaluator();
 
-        // i will use for each loop to iterate over row
-        for (Row row : sheet) {
+            // i will use for each loop to iterate over row
+            for (Row row : sheet) {
 
-            // i will use for each loop to iterate over cell
-            for(Cell cell : row) {
+                // i will use for each loop to iterate over cell
+                for (Cell cell : row) {
 
-                switch (cell.getCellType()) {
+                    switch (cell.getCellType()) {
 
-                    case CellType.STRING:
+                        case STRING:
 
-                        System.out.println(cell.getRichStringCellValue().getString());
+                            System.out.println(cell.getRichStringCellValue().getString());
 
-                        break;
+                            break;
 
-                    case CellType.NUMERIC:
+                        case NUMERIC:
 
-                        System.out.print(cell.getNumericCellValue() );
+                            System.out.print(cell.getNumericCellValue());
 
-                        break;
+                            break;
 
-                    case BOOLEAN:
+                        case BOOLEAN:
 
-                        System.out.println(cell.getBooleanCellValue() );
+                            System.out.println(cell.getBooleanCellValue());
 
-                        break;
+                            break;
 
-                    case CellType.FORMULA:
+                        case FORMULA:
 
-                        System.out.println(cell.getCellFormula());
+                            System.out.println(cell.getCellFormula());
 
-                        break;
+                            break;
 
-                    case CellType.BLANK:
+                        case BLANK:
 
-                        System.out.println();
+                            System.out.println();
 
-                        break;
+                            break;
+
+                    }
+
 
                 }
-
-
             }
-        }
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+
+        } /*catch (InvalidFormatException exc) {
+
+            exc.printStackTrace();
+        }*/
         
 
     }
