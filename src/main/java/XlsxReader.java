@@ -1,8 +1,5 @@
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -21,16 +18,13 @@ public class XlsxReader {
         try {
 
             // Get data from the file
-            FileInputStream file = new FileInputStream(new File("D:\\Read Excell File\\Read-Excell-File\\vzorek_dat.xlsx"));
+            /*FileInputStream file = new FileInputStream(new File(".\\vzorek_dat.xlsx"));*/
 
             // Created WorkBook instance to refer xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            Workbook workbook = WorkbookFactory.create(new FileInputStream("vzorek_dat.xlsx"));
 
             // Created sheet object to get the object
-            XSSFSheet sheet = workbook.getSheetAt(0);
-
-            // Evaluating cell type
-            FormulaEvaluator formEva = workbook.getCreationHelper().createFormulaEvaluator();
+            Sheet sheet = workbook.getSheetAt(0);
 
             // i will use for each loop to iterate over row
             for (Row row : sheet) {
