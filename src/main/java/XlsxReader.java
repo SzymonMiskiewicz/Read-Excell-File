@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 
 import static java.sql.Types.NUMERIC;
 
@@ -18,32 +19,28 @@ public class XlsxReader {
         try {
 
             // Get data from the file
-            /*FileInputStream file = new FileInputStream(new File(".\\vzorek_dat.xlsx"));*/
+            FileInputStream file = new FileInputStream(new File("vzorek_dat.xlsx"));
 
             // Created WorkBook instance to refer xlsx file
-            Workbook workbook = WorkbookFactory.create(new FileInputStream("vzorek_dat.xlsx"));
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             // Created sheet object to get the object
-            Sheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheetAt(0);
 
             // i will use for each loop to iterate over row
             for (Row row : sheet) {
 
-                // i will use for each loop to iterate over cell
-                for (Cell cell : row) {
-
-                    CellType type = cell.getCellType();
-
-                    if (type == CellType.NUMERIC) {
-
-                        System.out.printf("[%d, %d] = NUMERIC; Value = %f%n",
-                                cell.getRowIndex(), cell.getColumnIndex(),
-                                cell.getNumericCellValue());
-
-                    }
+                System.out.println(row.getCell(1));
 
                 }
-            }
+                for(Row row : sheet){
+
+                    Iterator<Cell> cellItr = row.iterator();
+                    while(cellItr.hasNext()){
+                        System.out.println(cellItr.next().toString());
+                    }
+                }
+
 
         } catch (FileNotFoundException e) {
 
