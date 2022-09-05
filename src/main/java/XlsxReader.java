@@ -24,6 +24,7 @@ public class XlsxReader {
             // Created sheet object to get the object
             XSSFSheet sheet = workbook.getSheetAt(0);
 
+            // We can use DataFormatter to fetch the string value of an Excel cell.
             DataFormatter formatter = new DataFormatter();
 
             // i will use for each loop to iterate over row
@@ -40,7 +41,7 @@ public class XlsxReader {
                     cell = row.getCell(1);
 
                     if(number <=1) {
-                        
+
                     }
 
 
