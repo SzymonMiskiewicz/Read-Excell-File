@@ -1,6 +1,4 @@
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -10,11 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 
-import static java.sql.Types.NUMERIC;
-
 public class XlsxReader {
 
     public static void main(String[] args) {
+
 
         try {
 
@@ -27,20 +24,44 @@ public class XlsxReader {
             // Created sheet object to get the object
             XSSFSheet sheet = workbook.getSheetAt(0);
 
+            DataFormatter formatter = new DataFormatter();
+
             // i will use for each loop to iterate over row
+            try {
             for (Row row : sheet) {
 
-                System.out.println(row.getCell(1));
+                for (Cell cell : row) {
 
-                }
-                for(Row row : sheet){
+                    String strValue = formatter.formatCellValue(cell);
+                    int number;
+                    String text ;
+                    text = cell.getStringCellValue();
+                    number = Integer.parseInt(text);
+                    cell = row.getCell(1);
 
-                    Iterator<Cell> cellItr = row.iterator();
-                    while(cellItr.hasNext()){
-                        System.out.println(cellItr.next().toString());
+                    if(number <=1) {
+                        
                     }
-                }
 
+
+                    System.out.println(row.getCell(1));
+                }
+            }
+
+            } catch (NumberFormatException exc) {
+
+                exc.printStackTrace();
+            }
+
+            for (Row row : sheet) {
+
+                Iterator<Cell> cellItr = row.iterator();
+
+                while (cellItr.hasNext()) {
+
+                    System.out.println(cellItr.next().toString());
+                }
+            }
 
         } catch (FileNotFoundException e) {
 
@@ -54,5 +75,4 @@ public class XlsxReader {
 
 
     }
-
 }
