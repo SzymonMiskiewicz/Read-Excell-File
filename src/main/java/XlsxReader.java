@@ -29,24 +29,40 @@ public class XlsxReader {
 
             // i will use for each loop to iterate over row
             try {
+
             for (Row row : sheet) {
 
                 for (Cell cell : row) {
 
                     String strValue = formatter.formatCellValue(cell);
                     int number;
-                    String text ;
-                    text = cell.getStringCellValue();
-                    number = Integer.parseInt(text);
-                    cell = row.getCell(1);
+                    number = Integer.parseInt(strValue);
 
-                    if(number <=1) {
+                    // Check if number is less than
+                    // equal to 1
+                    if (number<= 1)
 
+                        System.out.println(number + "it is not prime number");
+
+                        // Check if number is 2
+                    else if (number== 2)
+                        System.out.println( number + "it is prime number");
+
+                        // Check if n is a multiple of 2
+                    else if (number% 2 == 0)
+                        System.out.println(number + "it is not prime number");
+
+                    // If not, then just check the odds
+                    for (int i = 3; i <= Math.sqrt(number); i += 2)
+                    {
+                        if (number % i == 0)
+                            System.out.println(number + "it is not prime number");
                     }
-
-
                     System.out.println(row.getCell(1));
+
                 }
+
+
             }
 
             } catch (NumberFormatException exc) {
